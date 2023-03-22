@@ -9,9 +9,11 @@ exports.addexpenses=async(req,res,next)=>{
     console.log('-----------------inadd')
     try{
         if(!req.body.description){
-            throw new Error("eter description")
+            throw new Error("enter description")
         }
         console.log('----------------in try')
+      
+
 const amount=req.body.amount
 const description=req.body.description
 const category=req.body.category
@@ -30,7 +32,9 @@ res.status(500).json({error:err})
 }
 exports.getexpenses=async(req,res,next)=>{
     try{
+        
         const expense=await Expense.findAll()
+        console.log(expense)
         res.status(200).json({allExpense:expense})
     }catch(err){
         console.log(err)

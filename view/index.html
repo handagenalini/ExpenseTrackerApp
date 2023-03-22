@@ -7,24 +7,17 @@
     <title>Document</title>
 </head>
 <body>
+    <h4>EXPENCE TRACKER</h4>
     
     <form onsubmit="savetolocal(event)">
     <label for="amount">Amount</label>
     <input id='amount'type="number" name="amount">
-    <label for="description">description</label>
+    <label for="description">Product</label>
     <input id='description'type="text" name="description">
-    <label for="category">Choose category</label>
-    
-    <select id="category" name="category">
-        <option value="fuel">fuel</option>
-        <option value="food">food</option>
-        <option value="electricity">electricity</option>
-        <option value="Movie">Movie</option>
-    </select>
    
-    <button>add expence</button>
+    <button>Add Product</button>
 </form>
-<h4 id="product" >Daily Expences</h4>
+<h4 id="product" >Daily Products</h4>
 <ul id="listOfUsers"></ul>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
 
@@ -35,18 +28,19 @@
         try{
         const amount=event.target.amount.value
         const description=event.target.description.value
-        const category=event.target.category.value
+        // const category=event.target.category.value
         // localStorage.setItem('name',name)
         // localStorage.setItem('email',email)
         // localStorage.setItem('phonenumber',phonenumber)
         const obj={
             amount,
             description,
-            category
+        
         }
         console.log('---------------in front')
       
        const data=await axios.post('http://localhost:3000/addexpense',obj)
+       console.log(data)
     const items=await data
     console.log(data)
         showUserOnScreen(items.data.newExpense)
@@ -72,9 +66,9 @@
         
                     const parentNode=document.getElementById('listOfUsers')
                     
-                    const childHTML=`<li id=${user.id}> ${user.amount}-----${user.description}--------${user.category}  
+                    const childHTML=`<li id=${user.id}> ${user.amount}-----${user.description}  
                         <button onclick=deleteuser('${user.id}','${user.amount}')> delete user</button>
-                        <button onclick=edituser('${user.description}','${user.amount}','${user.category}','${user.id}')>edit user</button></li>`
+                        <button onclick=edituser('${user.description}','${user.amount}','${user.id}')>edit user</button></li>`
 
                         parentNode.innerHTML=parentNode.innerHTML+childHTML
                         addition(user.amount)
@@ -109,7 +103,7 @@
                     
                     document.getElementById('description').value=description
                     document.getElementById('amount').value=amount
-                    document.getElementById('category').value=category 
+                
                     // minus(amount)     
                     deleteuser(userId,amount) 
                     console.log(amount,'--------------------')  
@@ -120,6 +114,7 @@
  
 
 </script>
+
 <h4 id="add"></h4>
 <script>
     var prev=0
